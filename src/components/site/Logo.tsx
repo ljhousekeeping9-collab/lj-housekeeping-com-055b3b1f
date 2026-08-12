@@ -7,7 +7,7 @@ export function Logo({ className = "h-10" }: { className?: string }) {
       <img
         src={logo.url}
         alt="LJ Housekeeping — your home, our priority"
-        className={`${className} w-auto object-contain`}
+        className={`${className} w-auto object-contain mix-blend-screen`}
       />
     </Link>
   );
