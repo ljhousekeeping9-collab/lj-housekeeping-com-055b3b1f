@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Sparkles, ShieldCheck, Search, UserRoundCheck } from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
-import differenceImage from "@/assets/difference.jpg";
+import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/")({
@@ -168,10 +168,10 @@ function Index() {
           <div className="relative">
             <div className="absolute -inset-6 rounded-full bg-primary/15 blur-[90px]" />
             <img
-              src={differenceImage}
-              alt="Spotless dark stone kitchen counter"
-              width={1280}
-              height={1280}
+              src={differenceAsset.url}
+              alt="Spotless modern kitchen with a polished quartz island"
+              width={1209}
+              height={1612}
               loading="lazy"
               className="relative rounded-xl border border-border object-cover"
             />
