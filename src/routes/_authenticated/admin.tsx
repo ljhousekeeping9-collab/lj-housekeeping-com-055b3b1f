@@ -226,8 +226,35 @@ function AdminDashboard() {
         </button>
       </div>
 
-      <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-        <div className="relative flex-1">
+      <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {(
+          [
+            ["New Leads", "New"],
+            ["Contacted", "Contacted"],
+            ["Estimates Sent", "Estimate Sent"],
+            ["Won", "Won"],
+            ["Lost", "Lost"],
+          ] as const
+        ).map(([label, status]) => (
+          <button
+            key={status}
+            onClick={() => setStatusFilter(statusFilter === status ? "All" : status)}
+            className={`glow-panel rounded-lg px-4 py-4 text-left transition-colors ${
+              statusFilter === status ? "border-primary/60" : ""
+            }`}
+          >
+            <p className="text-[0.6rem] tracking-[0.18em] text-muted-foreground uppercase">
+              {label}
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-silver-gradient">
+              {counts[status] ?? 0}
+            </p>
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-8 flex flex-col gap-3">
+        <div className="relative">
           <Search className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
           <input
             value={search}
@@ -236,18 +263,52 @@ function AdminDashboard() {
             className="w-full rounded-md border border-input bg-secondary/40 py-3 pr-4 pl-11 text-sm outline-none transition-all focus:border-primary/70"
           />
         </div>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as "All" | LeadStatus)}
-          className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
-        >
-          <option value="All">All statuses</option>
-          {LEAD_STATUSES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as "All" | LeadStatus)}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="All">All statuses</option>
+            {LEAD_STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={serviceFilter}
+            onChange={(e) => setServiceFilter(e.target.value)}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="All">All services</option>
+            {serviceOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={propertyFilter}
+            onChange={(e) => setPropertyFilter(e.target.value)}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="All">All property types</option>
+            {propertyOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as "newest" | "oldest")}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </div>
       </div>
 
       <div className="mt-8 space-y-3">
