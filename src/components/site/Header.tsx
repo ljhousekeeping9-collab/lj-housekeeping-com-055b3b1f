@@ -85,9 +85,17 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <a
+              href="tel:+17606978242"
+              className="flex items-center gap-2 py-4 text-[0.75rem] uppercase tracking-[0.24em] text-primary"
+            >
+              <Phone className="size-4" strokeWidth={1.6} />
+              Call (760) 697-8242
+            </a>
           </nav>
         </div>
       )}
+
     </header>
   );
 }
