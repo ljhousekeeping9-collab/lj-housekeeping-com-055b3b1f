@@ -82,6 +82,9 @@ function AdminDashboard() {
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"All" | LeadStatus>("All");
+  const [serviceFilter, setServiceFilter] = useState("All");
+  const [propertyFilter, setPropertyFilter] = useState("All");
+  const [sort, setSort] = useState<"newest" | "oldest">("newest");
   const [openId, setOpenId] = useState<string | null>(null);
 
   const access = useQuery({ queryKey: ["admin-access"], queryFn: () => fetchAccess({}) });
@@ -117,20 +120,46 @@ function AdminDashboard() {
     onError: () => toast.error("Could not add the note"),
   });
 
+  const allLeads = useMemo(() => leadsQuery.data ?? [], [leadsQuery.data]);
+
+  const counts = useMemo(() => {
+    const base: Record<string, number> = {};
+    for (const s of LEAD_STATUSES) base[s] = 0;
+    for (const lead of allLeads) base[lead.status] = (base[lead.status] ?? 0) + 1;
+    return base;
+  }, [allLeads]);
+
+  const serviceOptions = useMemo(
+    () => Array.from(new Set(allLeads.map((l) => l.service_requested))).sort(),
+    [allLeads],
+  );
+  const propertyOptions = useMemo(
+    () => Array.from(new Set(allLeads.map((l) => l.property_type))).sort(),
+    [allLeads],
+  );
+
   const leads = useMemo(() => {
-    const rows = leadsQuery.data ?? [];
     const q = search.trim().toLowerCase();
-    return rows.filter((lead) => {
+    const rows = allLeads.filter((lead) => {
       const matchesStatus = statusFilter === "All" || lead.status === statusFilter;
+      const matchesService =
+        serviceFilter === "All" || lead.service_requested === serviceFilter;
+      const matchesProperty =
+        propertyFilter === "All" || lead.property_type === propertyFilter;
       const matchesSearch =
         !q ||
         [lead.full_name, lead.phone, lead.email, lead.property_address, lead.service_requested]
           .join(" ")
           .toLowerCase()
           .includes(q);
-      return matchesStatus && matchesSearch;
+      return matchesStatus && matchesService && matchesProperty && matchesSearch;
     });
-  }, [leadsQuery.data, search, statusFilter]);
+    return [...rows].sort((a, b) =>
+      sort === "newest"
+        ? b.created_at.localeCompare(a.created_at)
+        : a.created_at.localeCompare(b.created_at),
+    );
+  }, [allLeads, search, statusFilter, serviceFilter, propertyFilter, sort]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -184,7 +213,7 @@ function AdminDashboard() {
     <div className="mx-auto max-w-6xl px-5 pt-32 pb-24">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Internal</p>
+          <p className="eyebrow">LJ Housekeeping</p>
           <h1 className="mt-3 text-2xl font-semibold md:text-4xl">
             <span className="text-silver-gradient">LEAD DASHBOARD</span>
           </h1>
@@ -197,8 +226,35 @@ function AdminDashboard() {
         </button>
       </div>
 
-      <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-        <div className="relative flex-1">
+      <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {(
+          [
+            ["New Leads", "New"],
+            ["Contacted", "Contacted"],
+            ["Estimates Sent", "Estimate Sent"],
+            ["Won", "Won"],
+            ["Lost", "Lost"],
+          ] as const
+        ).map(([label, status]) => (
+          <button
+            key={status}
+            onClick={() => setStatusFilter(statusFilter === status ? "All" : status)}
+            className={`glow-panel rounded-lg px-4 py-4 text-left transition-colors ${
+              statusFilter === status ? "border-primary/60" : ""
+            }`}
+          >
+            <p className="text-[0.6rem] tracking-[0.18em] text-muted-foreground uppercase">
+              {label}
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-silver-gradient">
+              {counts[status] ?? 0}
+            </p>
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-8 flex flex-col gap-3">
+        <div className="relative">
           <Search className="absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground" />
           <input
             value={search}
@@ -207,18 +263,52 @@ function AdminDashboard() {
             className="w-full rounded-md border border-input bg-secondary/40 py-3 pr-4 pl-11 text-sm outline-none transition-all focus:border-primary/70"
           />
         </div>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as "All" | LeadStatus)}
-          className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
-        >
-          <option value="All">All statuses</option>
-          {LEAD_STATUSES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as "All" | LeadStatus)}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="All">All statuses</option>
+            {LEAD_STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={serviceFilter}
+            onChange={(e) => setServiceFilter(e.target.value)}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="All">All services</option>
+            {serviceOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={propertyFilter}
+            onChange={(e) => setPropertyFilter(e.target.value)}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="All">All property types</option>
+            {propertyOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as "newest" | "oldest")}
+            className="rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm outline-none focus:border-primary/70"
+          >
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </div>
       </div>
 
       <div className="mt-8 space-y-3">
@@ -239,10 +329,10 @@ function AdminDashboard() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{lead.full_name}</p>
               <p className="mt-1 truncate text-xs text-muted-foreground">
-                {lead.service_requested} · {lead.phone}
+                {lead.service_requested} · {lead.property_type} · {lead.phone}
               </p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <span className="text-xs text-muted-foreground">
                 {formatDate(lead.created_at)}
               </span>
