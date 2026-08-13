@@ -120,6 +120,8 @@ const faqs = [
     answer:
       "You can contact us through the information provided on our website or submit a Request an Estimate form, and we'll get back to you.",
   },
+];
+
 const testimonials = [
   {
     quote:
