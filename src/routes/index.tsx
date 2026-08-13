@@ -1,5 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Sparkles, ShieldCheck, Search, UserRoundCheck } from "lucide-react";
+import {
+  Sparkles,
+  ShieldCheck,
+  Search,
+  UserRoundCheck,
+  Star,
+} from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
