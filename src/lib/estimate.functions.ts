@@ -49,7 +49,17 @@ export const submitEstimate = createServerFn({ method: "POST" })
       await notifyNewLead({
         fullName: data.fullName,
         phone: data.phone,
+        email: data.email,
+        propertyAddress: data.propertyAddress,
+        propertyType: data.propertyType,
+        squareFootage: data.squareFootage,
+        bedrooms: data.bedrooms,
+        bathrooms: data.bathrooms,
         serviceRequested: data.serviceRequested,
+        cleaningFrequency: data.cleaningFrequency,
+        preferredDate: data.preferredDate,
+        additionalDetails: data.additionalDetails,
+        leadSource: data.leadSource,
       });
     } catch (notifyError) {
       // The lead is already saved; never fail the visitor's submission on SMS.
