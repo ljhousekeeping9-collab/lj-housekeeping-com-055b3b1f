@@ -73,6 +73,49 @@ const services = [
   },
 ];
 
+const faqs = [
+  {
+    question: "Do I need to be home while you clean?",
+    answer:
+      "Not necessarily. We can discuss access arrangements that work best for you before your service.",
+  },
+  {
+    question: "How long does a cleaning typically take?",
+    answer:
+      "The time depends on the size and condition of the space, the type of cleaning requested, and the level of detail needed. Your estimate will help determine the appropriate service.",
+  },
+  {
+    question: "Can I request specific areas to receive extra attention?",
+    answer:
+      "Absolutely. Let us know about any areas or priorities you have when requesting your estimate so we can take them into consideration.",
+  },
+  {
+    question: "What should I do before my cleaning?",
+    answer:
+      "We recommend putting away personal or valuable items and clearing areas you'd like cleaned whenever possible. This allows our team to focus more time on cleaning.",
+  },
+  {
+    question: "Can you clean around pets?",
+    answer:
+      "Yes. We understand that pets are part of the family. Please let us know about any pets or special considerations when requesting your estimate.",
+  },
+  {
+    question: "Can I make changes to my cleaning service later?",
+    answer:
+      "Yes. If your cleaning needs change, contact us and we'll discuss the best option for your updated needs.",
+  },
+  {
+    question: "What if I have a special cleaning request?",
+    answer:
+      "Just let us know. Include your request in the estimate form or discuss it with us when we follow up. We'll determine whether we can accommodate it.",
+  },
+  {
+    question: "How do I get in touch with LJ Housekeeping?",
+    answer:
+      "You can contact us through the information provided on our website or submit a Request an Estimate form, and we'll get back to you.",
+  },
+];
+
 function Index() {
   return (
     <div>
