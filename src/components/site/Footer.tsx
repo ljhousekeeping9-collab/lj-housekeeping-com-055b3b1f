@@ -43,12 +43,13 @@ export function Footer() {
               Request an Estimate
             </Link>
             <a
-              href="tel:+1-000-000-0000"
+              href="tel:+17606978242"
               className="mt-1 inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.24em] text-muted-foreground transition-colors hover:text-primary"
             >
               <Phone className="size-3.5" strokeWidth={1.6} />
-              Call Us
+              (760) 697-8242
             </a>
+
             <div className="mt-3 flex items-center gap-4">
               <a
                 href="https://www.instagram.com/lj.housekeeping?igsh=NTc4MTIwNjQ2YQ==&igsi=NTc4MTIwNjQ2YQ=="
