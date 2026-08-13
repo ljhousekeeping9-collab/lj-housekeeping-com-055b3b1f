@@ -213,7 +213,7 @@ function AdminDashboard() {
     <div className="mx-auto max-w-6xl px-5 pt-32 pb-24">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Internal</p>
+          <p className="eyebrow">LJ Housekeeping</p>
           <h1 className="mt-3 text-2xl font-semibold md:text-4xl">
             <span className="text-silver-gradient">LEAD DASHBOARD</span>
           </h1>
