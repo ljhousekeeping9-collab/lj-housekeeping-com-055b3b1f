@@ -21,37 +21,41 @@ export const submitEstimate = createServerFn({ method: "POST" })
       },
     });
 
-    const { data: inserted, error } = await supabase
-      .from("leads")
-      .insert({
-        full_name: data.fullName,
-        phone: data.phone,
-        email: data.email,
-        property_address: data.propertyAddress,
-        property_type: data.propertyType,
-        square_footage: data.squareFootage,
-        bedrooms: data.bedrooms,
-        bathrooms: data.bathrooms,
-        service_requested: data.serviceRequested,
-        cleaning_frequency: data.cleaningFrequency,
-        preferred_date: data.preferredDate,
-        additional_details: data.additionalDetails,
-        lead_source: data.leadSource,
-      })
-      .select("id")
-      .single();
+    // Anonymous submitters have INSERT but not SELECT on leads, so do not
+    // request the inserted row back (PostgREST would need a SELECT policy).
+    const { error } = await supabase.from("leads").insert({
+      full_name: data.fullName,
+      phone: data.phone,
+      email: data.email,
+      property_address: data.propertyAddress,
+      property_type: data.propertyType,
+      square_footage: data.squareFootage,
+      bedrooms: data.bedrooms,
+      bathrooms: data.bathrooms,
+      service_requested: data.serviceRequested,
+      cleaning_frequency: data.cleaningFrequency,
+      preferred_date: data.preferredDate,
+      additional_details: data.additionalDetails,
+      lead_source: data.leadSource,
+    });
 
     if (error) {
       console.error("Failed to save lead", error);
       throw new Error("We couldn't save your request. Please try again.");
     }
 
-    const { notifyNewLead } = await import("./notifications.server");
-    await notifyNewLead({
-      fullName: data.fullName,
-      phone: data.phone,
-      serviceRequested: data.serviceRequested,
-    });
+    try {
+      const { notifyNewLead } = await import("./notifications.server");
+      await notifyNewLead({
+        fullName: data.fullName,
+        phone: data.phone,
+        serviceRequested: data.serviceRequested,
+      });
+    } catch (notifyError) {
+      // The lead is already saved; never fail the visitor's submission on SMS.
+      console.error("Failed to send lead SMS", notifyError);
+    }
 
-    return { leadId: inserted.id as string };
+    return { ok: true as const };
   });
+
