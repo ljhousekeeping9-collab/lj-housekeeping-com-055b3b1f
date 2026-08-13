@@ -58,6 +58,8 @@ export function Header() {
               <Phone className="size-4" strokeWidth={1.6} />
             </a>
           </div>
+        </nav>
+
 
 
         <button
