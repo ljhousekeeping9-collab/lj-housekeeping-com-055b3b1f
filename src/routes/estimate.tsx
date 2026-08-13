@@ -74,7 +74,6 @@ function Estimate() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("ONSUBMIT fired");
     const raw = Object.fromEntries(
       Array.from(new FormData(e.currentTarget).entries()).map(([k, v]) => [k, String(v)]),
     );
@@ -86,7 +85,6 @@ function Estimate() {
         const key = String(issue.path[0]);
         if (!fieldErrors[key]) fieldErrors[key] = issue.message;
       }
-      console.log("ZODFAIL", JSON.stringify(fieldErrors));
       setErrors(fieldErrors);
       toast.error("Please check the highlighted fields.");
       return;
@@ -95,13 +93,10 @@ function Estimate() {
     setErrors({});
     setSending(true);
     try {
-      console.log("SENDING");
-      const r = await send({ data: raw as never });
-      console.log("SENT", JSON.stringify(r));
+      await send({ data: raw as never });
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (err) {
-      console.log("SENDERR", String(err));
+    } catch {
       toast.error("Something went wrong. Please call us at (760) 697-8242.");
     } finally {
       setSending(false);
