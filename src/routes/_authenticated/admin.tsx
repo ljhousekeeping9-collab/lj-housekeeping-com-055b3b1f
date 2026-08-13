@@ -329,10 +329,10 @@ function AdminDashboard() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{lead.full_name}</p>
               <p className="mt-1 truncate text-xs text-muted-foreground">
-                {lead.service_requested} · {lead.phone}
+                {lead.service_requested} · {lead.property_type} · {lead.phone}
               </p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <span className="text-xs text-muted-foreground">
                 {formatDate(lead.created_at)}
               </span>
