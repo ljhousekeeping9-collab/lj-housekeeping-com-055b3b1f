@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState, type FormEvent } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { submitEstimate } from "@/lib/estimate.functions";
+
 
 export const Route = createFileRoute("/estimate")({
   head: () => ({
@@ -54,12 +58,28 @@ function SectionTitle({ index, title }: { index: string; title: string }) {
 
 function Estimate() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const send = useServerFn(submitEstimate);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const fd = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(
+      Array.from(fd.entries()).map(([k, v]) => [k, String(v)]),
+    ) as Record<string, string>;
+
+    setSending(true);
+    try {
+      await send({ data: payload as never });
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      toast.error("Something went wrong. Please call us at (760) 697-8242.");
+    } finally {
+      setSending(false);
+    }
   };
+
 
   return (
     <div className="relative overflow-hidden">
@@ -210,10 +230,13 @@ function Estimate() {
 
               <button
                 type="submit"
-                className="w-full rounded-md bg-primary px-8 py-4 text-[0.72rem] font-semibold tracking-[0.24em] text-primary-foreground uppercase transition-all duration-300 hover:shadow-[var(--shadow-glow)]"
+                disabled={sending}
+                className="flex w-full items-center justify-center gap-3 rounded-md bg-primary px-8 py-4 text-[0.72rem] font-semibold tracking-[0.24em] text-primary-foreground uppercase transition-all duration-300 hover:shadow-[var(--shadow-glow)] disabled:opacity-60"
               >
-                Request My Estimate
+                {sending && <Loader2 className="size-4 animate-spin" />}
+                {sending ? "Sending" : "Request My Estimate"}
               </button>
+
               <p className="text-center text-xs text-muted-foreground">
                 Every estimate is customized to your space. No fixed pricing.
               </p>
