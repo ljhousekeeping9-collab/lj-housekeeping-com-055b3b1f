@@ -3,6 +3,12 @@ import { Sparkles, ShieldCheck, Search, UserRoundCheck } from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -64,6 +70,49 @@ const services = [
   {
     title: "Deep Cleaning",
     body: "Detailed cleaning for spaces that need extra attention and a more thorough reset.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Do I need to be home while you clean?",
+    answer:
+      "Not necessarily. We can discuss access arrangements that work best for you before your service.",
+  },
+  {
+    question: "How long does a cleaning typically take?",
+    answer:
+      "The time depends on the size and condition of the space, the type of cleaning requested, and the level of detail needed. Your estimate will help determine the appropriate service.",
+  },
+  {
+    question: "Can I request specific areas to receive extra attention?",
+    answer:
+      "Absolutely. Let us know about any areas or priorities you have when requesting your estimate so we can take them into consideration.",
+  },
+  {
+    question: "What should I do before my cleaning?",
+    answer:
+      "We recommend putting away personal or valuable items and clearing areas you'd like cleaned whenever possible. This allows our team to focus more time on cleaning.",
+  },
+  {
+    question: "Can you clean around pets?",
+    answer:
+      "Yes. We understand that pets are part of the family. Please let us know about any pets or special considerations when requesting your estimate.",
+  },
+  {
+    question: "Can I make changes to my cleaning service later?",
+    answer:
+      "Yes. If your cleaning needs change, contact us and we'll discuss the best option for your updated needs.",
+  },
+  {
+    question: "What if I have a special cleaning request?",
+    answer:
+      "Just let us know. Include your request in the estimate form or discuss it with us when we follow up. We'll determine whether we can accommodate it.",
+  },
+  {
+    question: "How do I get in touch with LJ Housekeeping?",
+    answer:
+      "You can contact us through the information provided on our website or submit a Request an Estimate form, and we'll get back to you.",
   },
 ];
 
@@ -193,6 +242,49 @@ function Index() {
               mind.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="mx-auto max-w-4xl px-5 py-24 md:px-10 md:py-32">
+        <div className="text-center">
+          <p className="eyebrow">FAQ</p>
+          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+            <span className="text-silver-gradient">Questions? We've got answers.</span>
+          </h2>
+        </div>
+        <div className="mt-14">
+          <Accordion type="single" collapsible className="glow-panel rounded-xl px-6 md:px-8">
+            {faqs.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="border-b border-border/40 last:border-b-0"
+              >
+                <AccordionTrigger className="py-5 text-left text-sm font-medium text-silver transition-colors duration-300 hover:text-primary hover:no-underline md:text-base">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+        <div className="mt-14 text-center">
+          <h3 className="text-lg font-semibold text-silver md:text-xl">
+            Still have questions?
+          </h3>
+          <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
+            We're happy to help. Reach out or request your personalized estimate and we'll
+            get back to you.
+          </p>
+          <Link
+            to="/estimate"
+            className="mt-8 inline-flex rounded-md bg-primary px-9 py-4 text-[0.72rem] font-semibold tracking-[0.24em] text-primary-foreground uppercase transition-all duration-300 hover:shadow-[var(--shadow-glow)]"
+          >
+            Request an Estimate
+          </Link>
         </div>
       </section>
 
