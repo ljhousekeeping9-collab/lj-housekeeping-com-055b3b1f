@@ -1,5 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Sparkles, ShieldCheck, Search, UserRoundCheck } from "lucide-react";
+import {
+  Sparkles,
+  ShieldCheck,
+  Search,
+  UserRoundCheck,
+  Star,
+} from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
@@ -115,6 +121,25 @@ const faqs = [
       "You can contact us through the information provided on our website or submit a Request an Estimate form, and we'll get back to you.",
   },
 ];
+
+const testimonials = [
+  {
+    quote:
+      "Professional, reliable, and pays attention to the details.",
+    author: "Verified Client",
+  },
+  {
+    quote:
+      "Our space looks and feels completely different after every cleaning.",
+    author: "Verified Client",
+  },
+  {
+    quote:
+      "Great communication and excellent attention to detail. We highly recommend LJ Housekeeping.",
+    author: "Verified Client",
+  },
+];
+
 
 function Index() {
   return (
@@ -285,6 +310,45 @@ function Index() {
           >
             Request an Estimate
           </Link>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="border-y border-border bg-card/30">
+        <div className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32">
+          <div className="text-center">
+            <p className="eyebrow">What Our Clients Say</p>
+            <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+              <span className="text-silver-gradient">
+                Trusted to keep spaces looking their best.
+              </span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
+              Real experiences from clients who have trusted LJ Housekeeping with their
+              homes and businesses.
+            </p>
+          </div>
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <div key={i} className="glow-panel rounded-xl p-8">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <Star
+                      key={idx}
+                      className="size-4 fill-primary text-primary"
+                      strokeWidth={1.4}
+                    />
+                  ))}
+                </div>
+                <blockquote className="mt-6 text-base leading-relaxed text-silver md:text-lg">
+                  “{t.quote}”
+                </blockquote>
+                <p className="mt-6 text-xs tracking-[0.2em] text-steel uppercase">
+                  — {t.author}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
