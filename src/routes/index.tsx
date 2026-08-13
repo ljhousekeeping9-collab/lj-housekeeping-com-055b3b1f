@@ -122,23 +122,6 @@ const faqs = [
   },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "Professional, reliable, and pays attention to the details.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Our space looks and feels completely different after every cleaning.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Great communication and excellent attention to detail. We highly recommend LJ Housekeeping.",
-    author: "Verified Client",
-  },
-];
 
 
 function Index() {
@@ -315,39 +298,28 @@ function Index() {
 
       {/* Testimonials */}
       <section className="border-y border-border bg-card/30">
-        <div className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32">
-          <div className="text-center">
-            <p className="eyebrow">What Our Clients Say</p>
-            <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
-              <span className="text-silver-gradient">
-                Trusted to keep spaces looking their best.
-              </span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
-              Real experiences from clients who have trusted LJ Housekeeping with their
-              homes and businesses.
-            </p>
-          </div>
-          <div className="mt-14 grid gap-5 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <div key={i} className="glow-panel rounded-xl p-8">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <Star
-                      key={idx}
-                      className="size-4 fill-primary text-primary"
-                      strokeWidth={1.4}
-                    />
-                  ))}
-                </div>
-                <blockquote className="mt-6 text-base leading-relaxed text-silver md:text-lg">
-                  “{t.quote}”
-                </blockquote>
-                <p className="mt-6 text-xs tracking-[0.2em] text-steel uppercase">
-                  — {t.author}
-                </p>
-              </div>
-            ))}
+        <div className="mx-auto max-w-4xl px-5 py-24 text-center md:px-10 md:py-32">
+          <p className="eyebrow">What Our Clients Say</p>
+          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+            <span className="text-silver-gradient">Real experiences. Coming soon.</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            We’re building our client community and look forward to sharing their
+            experiences with LJ Housekeeping.
+          </p>
+          <div className="mt-10 inline-flex items-center gap-3 rounded-full border border-border/60 bg-secondary/30 px-6 py-3">
+            <div className="flex gap-0.5">
+              {Array.from({ length: 5 }).map((_, idx) => (
+                <Star
+                  key={idx}
+                  className="size-4 text-steel/60"
+                  strokeWidth={1.4}
+                />
+              ))}
+            </div>
+            <span className="text-xs tracking-[0.2em] text-steel uppercase">
+              Client reviews coming soon
+            </span>
           </div>
         </div>
       </section>
