@@ -120,20 +120,46 @@ function AdminDashboard() {
     onError: () => toast.error("Could not add the note"),
   });
 
+  const allLeads = useMemo(() => leadsQuery.data ?? [], [leadsQuery.data]);
+
+  const counts = useMemo(() => {
+    const base: Record<string, number> = {};
+    for (const s of LEAD_STATUSES) base[s] = 0;
+    for (const lead of allLeads) base[lead.status] = (base[lead.status] ?? 0) + 1;
+    return base;
+  }, [allLeads]);
+
+  const serviceOptions = useMemo(
+    () => Array.from(new Set(allLeads.map((l) => l.service_requested))).sort(),
+    [allLeads],
+  );
+  const propertyOptions = useMemo(
+    () => Array.from(new Set(allLeads.map((l) => l.property_type))).sort(),
+    [allLeads],
+  );
+
   const leads = useMemo(() => {
-    const rows = leadsQuery.data ?? [];
     const q = search.trim().toLowerCase();
-    return rows.filter((lead) => {
+    const rows = allLeads.filter((lead) => {
       const matchesStatus = statusFilter === "All" || lead.status === statusFilter;
+      const matchesService =
+        serviceFilter === "All" || lead.service_requested === serviceFilter;
+      const matchesProperty =
+        propertyFilter === "All" || lead.property_type === propertyFilter;
       const matchesSearch =
         !q ||
         [lead.full_name, lead.phone, lead.email, lead.property_address, lead.service_requested]
           .join(" ")
           .toLowerCase()
           .includes(q);
-      return matchesStatus && matchesSearch;
+      return matchesStatus && matchesService && matchesProperty && matchesSearch;
     });
-  }, [leadsQuery.data, search, statusFilter]);
+    return [...rows].sort((a, b) =>
+      sort === "newest"
+        ? b.created_at.localeCompare(a.created_at)
+        : a.created_at.localeCompare(b.created_at),
+    );
+  }, [allLeads, search, statusFilter, serviceFilter, propertyFilter, sort]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
