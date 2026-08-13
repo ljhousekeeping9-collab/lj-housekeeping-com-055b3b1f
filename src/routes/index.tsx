@@ -3,6 +3,12 @@ import { Sparkles, ShieldCheck, Search, UserRoundCheck } from "lucide-react";
 import heroImage from "@/assets/hero-home.jpg";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
