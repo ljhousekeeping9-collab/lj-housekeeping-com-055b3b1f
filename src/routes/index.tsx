@@ -245,6 +245,49 @@ function Index() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="mx-auto max-w-4xl px-5 py-24 md:px-10 md:py-32">
+        <div className="text-center">
+          <p className="eyebrow">FAQ</p>
+          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+            <span className="text-silver-gradient">Questions? We've got answers.</span>
+          </h2>
+        </div>
+        <div className="mt-14">
+          <Accordion type="single" collapsible className="glow-panel rounded-xl px-6 md:px-8">
+            {faqs.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="border-b border-border/40 last:border-b-0"
+              >
+                <AccordionTrigger className="py-5 text-left text-sm font-medium text-silver transition-colors duration-300 hover:text-primary hover:no-underline md:text-base">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+        <div className="mt-14 text-center">
+          <h3 className="text-lg font-semibold text-silver md:text-xl">
+            Still have questions?
+          </h3>
+          <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
+            We're happy to help. Reach out or request your personalized estimate and we'll
+            get back to you.
+          </p>
+          <Link
+            to="/estimate"
+            className="mt-8 inline-flex rounded-md bg-primary px-9 py-4 text-[0.72rem] font-semibold tracking-[0.24em] text-primary-foreground uppercase transition-all duration-300 hover:shadow-[var(--shadow-glow)]"
+          >
+            Request an Estimate
+          </Link>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="relative overflow-hidden border-t border-border">
         <div className="absolute inset-x-0 bottom-0 mx-auto h-72 max-w-3xl rounded-full bg-primary/20 blur-[130px]" />
