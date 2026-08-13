@@ -122,23 +122,6 @@ const faqs = [
   },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "Professional, reliable, and pays attention to the details.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Our space looks and feels completely different after every cleaning.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Great communication and excellent attention to detail. We highly recommend LJ Housekeeping.",
-    author: "Verified Client",
-  },
-];
 
 
 function Index() {
