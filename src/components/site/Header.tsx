@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Logo } from "./Logo";
+
 
 const links = [
   { to: "/", label: "Home" },
@@ -42,15 +43,25 @@ export function Header() {
               {l.label}
             </Link>
           ))}
-          <Link
-            to="/estimate"
-            className="rounded-md border border-primary/50 bg-primary/10 px-5 py-2.5 text-[0.7rem] uppercase tracking-[0.22em] text-foreground transition-all duration-300 hover:bg-primary/25 hover:shadow-[var(--shadow-glow)]"
-          >
-            Request an Estimate
-          </Link>
+          <div className="hidden items-center gap-3 md:flex">
+            <Link
+              to="/estimate"
+              className="rounded-md border border-primary/50 bg-primary/10 px-5 py-2.5 text-[0.7rem] uppercase tracking-[0.22em] text-foreground transition-all duration-300 hover:bg-primary/25 hover:shadow-[var(--shadow-glow)]"
+            >
+              Request an Estimate
+            </Link>
+            <a
+              href="tel:+17606978242"
+              aria-label="Call us at (760) 697-8242"
+              className="flex items-center justify-center rounded-md border border-border p-2.5 text-foreground transition-colors hover:border-primary/60 hover:text-primary"
+            >
+              <Phone className="size-4" strokeWidth={1.6} />
+            </a>
+          </div>
         </nav>
 
         <button
+
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
@@ -73,9 +84,17 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <a
+              href="tel:+17606978242"
+              className="flex items-center gap-2 py-4 text-[0.75rem] uppercase tracking-[0.24em] text-primary"
+            >
+              <Phone className="size-4" strokeWidth={1.6} />
+              Call (760) 697-8242
+            </a>
           </nav>
         </div>
       )}
+
     </header>
   );
 }
