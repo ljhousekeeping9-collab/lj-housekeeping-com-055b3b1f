@@ -42,7 +42,35 @@ export function Footer() {
             >
               Request an Estimate
             </Link>
+            <a
+              href="tel:+1-000-000-0000"
+              className="mt-1 inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.24em] text-muted-foreground transition-colors hover:text-primary"
+            >
+              <Phone className="size-3.5" strokeWidth={1.6} />
+              Call Us
+            </a>
+            <div className="mt-3 flex items-center gap-4">
+              <a
+                href="https://www.instagram.com/lj.housekeeping?igsh=NTc4MTIwNjQ2YQ==&igsi=NTc4MTIwNjQ2YQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow LJ Housekeeping on Instagram"
+                className="text-muted-foreground transition-colors hover:text-primary"
+              >
+                <Instagram className="size-5" strokeWidth={1.6} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@lj.housekeeping?_r=1&_t=ZT-98q387dF8t3"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow LJ Housekeeping on TikTok"
+                className="text-muted-foreground transition-colors hover:text-primary"
+              >
+                <TikTokIcon className="size-5" />
+              </a>
+            </div>
           </nav>
+
         </div>
 
         <div className="hairline mt-12" />
