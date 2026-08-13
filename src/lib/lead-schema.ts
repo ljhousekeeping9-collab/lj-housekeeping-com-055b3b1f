@@ -39,13 +39,27 @@ export const LEAD_SOURCES = [
   "Other",
 ] as const;
 
+const emptyToUndefined = (v: unknown) => (v === "" || v == null ? undefined : v);
+
 const optionalText = (max: number) =>
-  z
-    .string()
-    .trim()
-    .max(max)
-    .optional()
-    .transform((v) => (v ? v : null));
+  z.preprocess(
+    emptyToUndefined,
+    z
+      .string()
+      .trim()
+      .max(max)
+      .optional()
+      .transform((v) => v ?? null),
+  );
+
+const optionalEnum = <T extends readonly [string, ...string[]]>(values: T) =>
+  z.preprocess(
+    emptyToUndefined,
+    z
+      .enum(values)
+      .optional()
+      .transform((v) => v ?? null),
+  );
 
 export const estimateSchema = z.object({
   fullName: z.string().trim().min(1, "Full name is required").max(100),
@@ -57,22 +71,19 @@ export const estimateSchema = z.object({
   bedrooms: optionalText(10),
   bathrooms: optionalText(10),
   serviceRequested: z.enum(SERVICES),
-  cleaningFrequency: z
-    .enum(FREQUENCIES)
-    .optional()
-    .transform((v) => (v ? v : null)),
-  preferredDate: z
-    .string()
-    .trim()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .optional()
-    .or(z.literal(""))
-    .transform((v) => (v ? v : null)),
+  cleaningFrequency: optionalEnum(FREQUENCIES),
+  preferredDate: z.preprocess(
+    emptyToUndefined,
+    z
+      .string()
+      .trim()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Use a valid date")
+      .optional()
+      .transform((v) => v ?? null),
+  ),
   additionalDetails: optionalText(1500),
-  leadSource: z
-    .enum(LEAD_SOURCES)
-    .optional()
-    .transform((v) => (v ? v : null)),
+  leadSource: optionalEnum(LEAD_SOURCES),
 });
+
 
 export type EstimateInput = z.input<typeof estimateSchema>;
