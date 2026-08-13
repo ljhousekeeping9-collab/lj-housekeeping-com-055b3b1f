@@ -230,10 +230,13 @@ function Estimate() {
 
               <button
                 type="submit"
-                className="w-full rounded-md bg-primary px-8 py-4 text-[0.72rem] font-semibold tracking-[0.24em] text-primary-foreground uppercase transition-all duration-300 hover:shadow-[var(--shadow-glow)]"
+                disabled={sending}
+                className="flex w-full items-center justify-center gap-3 rounded-md bg-primary px-8 py-4 text-[0.72rem] font-semibold tracking-[0.24em] text-primary-foreground uppercase transition-all duration-300 hover:shadow-[var(--shadow-glow)] disabled:opacity-60"
               >
-                Request My Estimate
+                {sending && <Loader2 className="size-4 animate-spin" />}
+                {sending ? "Sending" : "Request My Estimate"}
               </button>
+
               <p className="text-center text-xs text-muted-foreground">
                 Every estimate is customized to your space. No fixed pricing.
               </p>
