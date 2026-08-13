@@ -82,6 +82,9 @@ function AdminDashboard() {
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"All" | LeadStatus>("All");
+  const [serviceFilter, setServiceFilter] = useState("All");
+  const [propertyFilter, setPropertyFilter] = useState("All");
+  const [sort, setSort] = useState<"newest" | "oldest">("newest");
   const [openId, setOpenId] = useState<string | null>(null);
 
   const access = useQuery({ queryKey: ["admin-access"], queryFn: () => fetchAccess({}) });
