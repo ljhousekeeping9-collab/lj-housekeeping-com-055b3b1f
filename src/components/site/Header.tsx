@@ -60,9 +60,8 @@ export function Header() {
           </div>
         </nav>
 
-
-
         <button
+
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
