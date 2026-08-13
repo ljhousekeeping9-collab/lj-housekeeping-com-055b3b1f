@@ -58,12 +58,28 @@ function SectionTitle({ index, title }: { index: string; title: string }) {
 
 function Estimate() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const send = useServerFn(submitEstimate);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const fd = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(
+      Array.from(fd.entries()).map(([k, v]) => [k, String(v)]),
+    ) as Record<string, string>;
+
+    setSending(true);
+    try {
+      await send({ data: payload as never });
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      toast.error("Something went wrong. Please call us at (760) 697-8242.");
+    } finally {
+      setSending(false);
+    }
   };
+
 
   return (
     <div className="relative overflow-hidden">
