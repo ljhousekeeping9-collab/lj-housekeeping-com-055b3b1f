@@ -9,6 +9,8 @@ import {
 import heroImage from "@/assets/hero-home.jpg";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
+import { ReviewForm } from "@/components/site/ReviewForm";
+import { listApprovedReviews } from "@/lib/reviews.functions";
 import {
   Accordion,
   AccordionContent,
@@ -38,6 +40,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: () => listApprovedReviews(),
   component: Index,
 });
 
@@ -122,30 +125,9 @@ const faqs = [
   },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "Professional, reliable, and pays attention to the details. Our space has never looked better.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Our space looks and feels completely different after every cleaning. Highly recommend.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Great communication and excellent attention to detail. We trust LJ Housekeeping completely.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Consistent, thorough, and respectful of our home. One less thing to worry about every week.",
-    author: "Verified Client",
-  },
-];
-
 function Index() {
+  const reviews = Route.useLoaderData();
+
   return (
     <div>
       {/* Hero */}
