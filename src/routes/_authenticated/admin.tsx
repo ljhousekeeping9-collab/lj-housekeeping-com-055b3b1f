@@ -14,6 +14,7 @@ import {
   listLeads,
   updateLeadStatus,
 } from "@/lib/leads.functions";
+import { AdminReviewsPanel } from "@/components/site/AdminReviewsPanel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -460,6 +461,8 @@ function AdminDashboard() {
           </div>
         </div>
       )}
+
+      <AdminReviewsPanel enabled={access.data?.isAdmin === true} />
     </div>
   );
 }

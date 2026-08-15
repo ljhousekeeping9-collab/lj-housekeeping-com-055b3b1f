@@ -9,6 +9,8 @@ import {
 import heroImage from "@/assets/hero-home.jpg";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
+import { ReviewForm } from "@/components/site/ReviewForm";
+import { listApprovedReviews } from "@/lib/reviews.functions";
 import {
   Accordion,
   AccordionContent,
@@ -38,6 +40,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: () => listApprovedReviews(),
   component: Index,
 });
 
@@ -122,30 +125,9 @@ const faqs = [
   },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "Professional, reliable, and pays attention to the details. Our space has never looked better.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Our space looks and feels completely different after every cleaning. Highly recommend.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Great communication and excellent attention to detail. We trust LJ Housekeeping completely.",
-    author: "Verified Client",
-  },
-  {
-    quote:
-      "Consistent, thorough, and respectful of our home. One less thing to worry about every week.",
-    author: "Verified Client",
-  },
-];
-
 function Index() {
+  const reviews = Route.useLoaderData();
+
   return (
     <div>
       {/* Hero */}
@@ -330,30 +312,35 @@ function Index() {
               homes and businesses.
             </p>
           </div>
-          <div className="mt-14 grid gap-5 sm:grid-cols-2">
-            {testimonials.map((t, i) => (
-              <div key={i} className="glow-panel flex flex-col rounded-lg p-8">
-                <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <Star
-                      key={idx}
-                      className="size-4 text-primary"
-                      fill="currentColor"
-                      strokeWidth={0}
-                    />
-                  ))}
+          {reviews.length > 0 && (
+            <div className="mt-14 grid gap-5 sm:grid-cols-2">
+              {reviews.map((t) => (
+                <div key={t.id} className="glow-panel flex flex-col rounded-lg p-8">
+                  <div className="flex gap-1">
+                    {Array.from({ length: 5 }).map((_, idx) => (
+                      <Star
+                        key={idx}
+                        className={idx < t.rating ? "size-4 text-primary" : "size-4 text-steel"}
+                        fill={idx < t.rating ? "currentColor" : "none"}
+                        strokeWidth={idx < t.rating ? 0 : 1.5}
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-5 text-sm leading-relaxed text-silver md:text-base">
+                    “{t.quote}”
+                  </p>
+                  <p className="mt-6 text-xs tracking-[0.2em] text-steel uppercase">
+                    — {t.author_name}
+                    {t.location ? ` · ${t.location}` : ""}
+                  </p>
                 </div>
-                <p className="mt-5 text-sm leading-relaxed text-silver md:text-base">
-                  “{t.quote}”
-                </p>
-                <p className="mt-6 text-xs tracking-[0.2em] text-steel uppercase">
-                  — {t.author}
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+          <ReviewForm />
         </div>
       </section>
+
 
       {/* Final CTA */}
       <section className="relative overflow-hidden border-t border-border">

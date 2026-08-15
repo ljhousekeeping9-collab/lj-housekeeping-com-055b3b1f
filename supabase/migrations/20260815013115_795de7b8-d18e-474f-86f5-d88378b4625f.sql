@@ -1,0 +1,1 @@
+DELETE FROM public.reviews WHERE author_name = 'Test Person';
