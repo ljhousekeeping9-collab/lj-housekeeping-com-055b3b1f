@@ -4,26 +4,29 @@ import { z } from "zod";
 
 import { LEAD_STATUSES } from "./lead-schema";
 
-async function assertAdmin(context: {
-  supabase: { rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }> };
+async function isAdmin(context: {
+  supabase: { from: (table: "user_roles") => any };
   userId: string;
 }) {
-  const { data } = await context.supabase.rpc("has_role", {
-    _user_id: context.userId,
-    _role: "admin",
-  });
-  if (data !== true) throw new Error("Forbidden");
+  const { data } = await context.supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", context.userId)
+    .eq("role", "admin")
+    .maybeSingle();
+  return !!data;
+}
+
+async function assertAdmin(context: Parameters<typeof isAdmin>[0]) {
+  if (!(await isAdmin(context))) throw new Error("Forbidden");
 }
 
 export const getMyAdminAccess = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
-    return { isAdmin: data === true };
+    return { isAdmin: await isAdmin(context as never) };
   });
+
 
 export const listLeads = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
