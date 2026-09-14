@@ -219,7 +219,7 @@ function Index() {
           </div>
 
           {/* Services video */}
-          <div className="mt-16 flex flex-col items-center">
+          <div className="mt-16 -mx-5 flex flex-col items-center md:mx-0">
             <ServicesVideo />
             <p className="mt-5 text-center text-xs tracking-[0.2em] text-steel uppercase">
               See our work in action
