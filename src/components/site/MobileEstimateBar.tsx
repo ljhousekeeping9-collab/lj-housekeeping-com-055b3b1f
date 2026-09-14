@@ -53,6 +53,8 @@ export function MobileEstimateBar() {
 
   return (
     <div
+      data-estimate-bar
+
       className={`fixed inset-x-0 bottom-0 z-40 md:hidden transition-all duration-300 ease-out ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0"
       }`}
