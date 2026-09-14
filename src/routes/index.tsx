@@ -144,8 +144,9 @@ function Index() {
 
         <div className="reveal relative z-10 mx-auto max-w-4xl px-6 pt-28 pb-20 text-center">
           <div className="relative mx-auto w-fit">
+            <div className="absolute -inset-16 bg-[radial-gradient(closest-side,var(--background)_35%,transparent_100%)]" />
             <div className="absolute inset-[-12%] rounded-full bg-primary/25 blur-3xl" />
-            <Logo className="relative mx-auto h-40 md:h-56 [mask-image:radial-gradient(ellipse_72%_72%_at_center,black_60%,transparent_100%)]" />
+            <Logo className="relative mx-auto h-40 md:h-56 [mask-image:radial-gradient(ellipse_65%_65%_at_center,black_50%,transparent_95%)]" />
           </div>
           <div className="mx-auto mt-2 h-px w-24 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
           <h1 className="mt-8 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-7xl">
