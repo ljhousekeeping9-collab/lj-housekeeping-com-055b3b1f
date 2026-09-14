@@ -225,6 +225,17 @@ function Index() {
               <div className="absolute -inset-4 rounded-[2rem] bg-primary/15 blur-[70px]" />
               <div className="relative overflow-hidden rounded-2xl border border-border bg-background shadow-2xl">
                 <video
+                  ref={(el) => {
+                    if (!el) return;
+                    el.muted = true;
+                    el.defaultMuted = true;
+                    const tryPlay = () => {
+                      const p = el.play();
+                      if (p && typeof p.catch === "function") p.catch(() => {});
+                    };
+                    tryPlay();
+                    el.addEventListener("canplay", tryPlay, { once: true });
+                  }}
                   src={servicesVideo.url}
                   poster={servicesPoster.url}
                   width={1080}
@@ -233,7 +244,7 @@ function Index() {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   className="aspect-[9/16] w-full object-cover"
                   aria-label="LJ Housekeeping cleaning showcase"
                 />
