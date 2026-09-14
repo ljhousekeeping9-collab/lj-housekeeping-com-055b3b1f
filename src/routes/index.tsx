@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import heroImage from "@/assets/hero-home.webp";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
+import servicesVideo from "@/assets/lj-services.mp4.asset.json";
 import { Logo } from "@/components/site/Logo";
 import { ReviewForm } from "@/components/site/ReviewForm";
 import { listApprovedReviews } from "@/lib/reviews.functions";
