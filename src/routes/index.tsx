@@ -226,6 +226,7 @@ function Index() {
               <div className="relative overflow-hidden rounded-2xl border border-border bg-background shadow-2xl">
                 <video
                   src={servicesVideo.url}
+                  poster={servicesPoster.url}
                   width={1080}
                   height={1920}
                   autoPlay
