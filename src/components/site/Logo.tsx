@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/lj-logo.asset.json";
+import logo from "@/assets/lj-logo.webp";
 
 export function Logo({ className = "h-10" }: { className?: string }) {
   return (
     <Link to="/" className="inline-flex items-center" aria-label="LJ Housekeeping home">
       <img
-        src={logo.url}
+        src={logo}
         alt="LJ Housekeeping — your home, our priority"
         className={`${className} w-auto object-contain mix-blend-screen`}
       />
