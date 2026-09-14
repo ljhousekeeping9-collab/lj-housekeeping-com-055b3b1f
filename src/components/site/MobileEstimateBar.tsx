@@ -21,7 +21,7 @@ export function MobileEstimateBar() {
     const setup = () => {
       const ctas = Array.from(
         document.querySelectorAll<HTMLAnchorElement>('a[href="/estimate"]')
-      );
+      ).filter((el) => !el.closest("[data-estimate-bar]"));
       if (ctas.length === 0) {
         setShow(true);
         return;
@@ -39,6 +39,7 @@ export function MobileEstimateBar() {
       ctas.forEach((el) => observer!.observe(el));
     };
 
+
     // Wait for route content to render before collecting CTAs
     timer = window.setTimeout(setup, 300);
     return () => {
@@ -52,6 +53,8 @@ export function MobileEstimateBar() {
 
   return (
     <div
+      data-estimate-bar
+
       className={`fixed inset-x-0 bottom-0 z-40 md:hidden transition-all duration-300 ease-out ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0"
       }`}
