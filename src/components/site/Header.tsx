@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Logo } from "./Logo";
@@ -13,9 +13,14 @@ const links = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  // On the homepage, the big hero logo owns the top of the page — the header
+  // logo only fades in once the hero has scrolled out of view.
+  const showLogo = !isHome || scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 320);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -30,7 +35,13 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-10">
-        <Logo className="h-11 md:h-14" />
+        <div
+          className={`transition-all duration-500 ${
+            showLogo ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        >
+          <Logo className="h-11 md:h-14" />
+        </div>
 
         <nav className="hidden items-center gap-10 md:flex">
           {links.slice(0, 2).map((l) => (
