@@ -217,6 +217,31 @@ function Index() {
               </div>
             ))}
           </div>
+
+          {/* Services video */}
+          <div className="mt-16 flex flex-col items-center">
+            <div className="relative w-full max-w-[360px]">
+              <div className="absolute -inset-4 rounded-[2rem] bg-primary/15 blur-[70px]" />
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-background shadow-2xl">
+                <video
+                  src={servicesVideo.url}
+                  width={1080}
+                  height={1920}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="aspect-[9/16] w-full object-cover"
+                  aria-label="LJ Housekeeping cleaning showcase"
+                />
+              </div>
+            </div>
+            <p className="mt-5 text-center text-xs tracking-[0.2em] text-steel uppercase">
+              See our work in action
+            </p>
+          </div>
+
           <div className="mt-12">
             <Link
               to="/estimate"
