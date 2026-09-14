@@ -54,8 +54,8 @@ export function ServicesVideo() {
   };
 
   return (
-    <div className="relative w-full max-w-[360px]">
-      <div className="absolute -inset-4 rounded-[2rem] bg-primary/15 blur-[70px]" />
+    <div className="relative w-full max-w-[260px] md:max-w-[300px]">
+      <div className="absolute -inset-3 rounded-[2rem] bg-primary/15 blur-[50px]" />
       <div className="relative overflow-hidden rounded-2xl border border-border bg-background shadow-2xl">
         <video
           ref={ref}
