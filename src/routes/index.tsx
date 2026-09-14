@@ -6,7 +6,7 @@ import {
   UserRoundCheck,
   Star,
 } from "lucide-react";
-import heroImage from "@/assets/hero-home.jpg";
+import heroImage from "@/assets/hero-home.webp";
 import differenceAsset from "@/assets/kitchen-difference.jpg.asset.json";
 import { Logo } from "@/components/site/Logo";
 import { ReviewForm } from "@/components/site/ReviewForm";

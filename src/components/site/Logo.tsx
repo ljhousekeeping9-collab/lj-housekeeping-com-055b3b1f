@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/lj-logo.asset.json";
+import logo from "@/assets/lj-logo.webp";
 
 export function Logo({ className = "h-10" }: { className?: string }) {
   return (
