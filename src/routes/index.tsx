@@ -140,11 +140,15 @@ function Index() {
           className="absolute inset-0 size-full object-cover opacity-45"
         />
         <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_10%,transparent,var(--background)_75%)]" />
-        <div className="absolute inset-x-0 top-1/3 -z-0 mx-auto h-64 max-w-2xl rounded-full bg-primary/20 blur-[120px]" />
+        <div className="absolute inset-x-0 top-1/4 -z-0 mx-auto h-72 max-w-2xl rounded-full bg-primary/25 blur-[130px]" />
 
         <div className="reveal relative z-10 mx-auto max-w-4xl px-6 pt-28 pb-20 text-center">
-          <Logo className="mx-auto h-32 md:h-44" />
-          <h1 className="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-7xl">
+          <div className="relative mx-auto w-fit">
+            <div className="absolute inset-[-12%] rounded-full bg-primary/25 blur-3xl" />
+            <Logo className="relative mx-auto h-40 md:h-56 [mask-image:radial-gradient(ellipse_72%_72%_at_center,black_60%,transparent_100%)]" />
+          </div>
+          <div className="mx-auto mt-2 h-px w-24 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+          <h1 className="mt-8 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl md:text-7xl">
             <span className="text-silver-gradient">YOUR SPACE.</span>
             <br />
             <span className="text-primary">OUR PRIORITY.</span>
